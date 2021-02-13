@@ -21,17 +21,71 @@ namespace ApiCurso.Controllers
 
         // GET api/values
         [HttpGet("sum/{firstNumber}/{secoundNumber}")]
-        public IActionResult Get(string firstNumber, string secoundNumber)
+        public IActionResult Sum(string firstNumber, string secoundNumber)
         {
             if (IsNumeric(firstNumber) && IsNumeric(secoundNumber))
             {
                 var sum = ConvertToDecimal(firstNumber) + ConvertToDecimal(secoundNumber);
                 return Ok(sum.ToString());
             }
-
-
             return BadRequest("Invalid Input");
         }
+
+        [HttpGet("sub/{firstNumber}/{secoundNumber}")]
+        public IActionResult Sub(string firstNumber, string secoundNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secoundNumber))
+            {
+                var sum = ConvertToDecimal(firstNumber) - ConvertToDecimal(secoundNumber);
+                return Ok(sum.ToString());
+            }
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("mult/{firstNumber}/{secoundNumber}")]
+        public IActionResult Mult(string firstNumber, string secoundNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secoundNumber))
+            {
+                var sum = ConvertToDecimal(firstNumber) * ConvertToDecimal(secoundNumber);
+                return Ok(sum.ToString());
+            }
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("div/{firstNumber}/{secoundNumber}")]
+        public IActionResult Div(string firstNumber, string secoundNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secoundNumber) && ConvertToDecimal(secoundNumber) > 0)
+            {
+                var sum = ConvertToDecimal(firstNumber) / ConvertToDecimal(secoundNumber);
+                return Ok(sum.ToString());
+            }
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("average/{firstNumber}/{secoundNumber}")]
+        public IActionResult Average(string firstNumber, string secoundNumber)
+        {
+            if (IsNumeric(firstNumber) && IsNumeric(secoundNumber) )
+            {
+                var sum = (ConvertToDecimal(firstNumber) + ConvertToDecimal(secoundNumber)) / 2;
+                return Ok(sum.ToString());
+            }
+            return BadRequest("Invalid Input");
+        }
+
+        [HttpGet("SquareRoot/{firstNumber}")]
+        public IActionResult SquareRoot(string firstNumber)
+        {
+            if (IsNumeric(firstNumber))
+            {
+                var sum = Math.Sqrt(Convert.ToDouble((ConvertToDecimal(firstNumber))));
+                return Ok(sum.ToString());
+            }
+            return BadRequest("Invalid Input");
+        }
+
         private bool IsNumeric(string strNumber)
         {
             double number;
