@@ -1,6 +1,8 @@
-﻿using ApiCurso.Model.Context;
-using ApiCurso.Services;
-using ApiCurso.Services.Implementations;
+﻿using ApiCurso.Business;
+using ApiCurso.Business.Implementations;
+using ApiCurso.Model.Context;
+using ApiCurso.Repository;
+using ApiCurso.Repository.Implementations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,8 +35,13 @@ namespace ApiCurso
 
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
             services.AddDbContext<MySqlContext>(options => options.UseMySql(connection));
+
+            services.AddApiVersioning();
+            
             //Dependency Injection
-            services.AddScoped<IPersonService, PersonServiceImplementation>();
+            services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,14 +1,15 @@
 ﻿using ApiCurso.Model;
 using System.Collections.Generic;
 
-namespace ApiCurso.Services
+namespace ApiCurso.Repository
 {
-    public interface IPersonService
+    public interface IPersonRepository
     {
         Person Create(Person person);
         Person FindById(long id);
         List<Person> FindAll();
         Person Update(Person person);
         void Delete(long id);
+        bool Exists(long id);
     }
 }

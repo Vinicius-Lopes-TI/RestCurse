@@ -3,27 +3,18 @@ using ApiCurso.Model.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace ApiCurso.Services.Implementations
+namespace ApiCurso.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         private MySqlContext _context;
-        public PersonServiceImplementation(MySqlContext context)
+        public PersonRepositoryImplementation(MySqlContext context)
         {
             _context = context;
         }
 
-        List<Person> IPersonService.FindAll()
-        {
-            return _context.Persons.ToList();
-        }
-        Person IPersonService.FindById(long id)
-        {
-            return _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
-        }
-        Person IPersonService.Create(Person person)
+        public Person Create(Person person)
         {
             try
             {
@@ -36,7 +27,35 @@ namespace ApiCurso.Services.Implementations
             }
             return person;
         }
-        Person IPersonService.Update(Person person)
+
+        public void Delete(long id)
+        {
+            var result = _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
+            if (result != null)
+            {
+                try
+                {
+                    _context.Remove(result);
+                    _context.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        public List<Person> FindAll()
+        {
+            return _context.Persons.ToList();
+        }
+
+        public Person FindById(long id)
+        {
+            return _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
+        }
+
+        public Person Update(Person person)
         {
             if (!Exists(person.Id))
                 return new Person();
@@ -57,24 +76,7 @@ namespace ApiCurso.Services.Implementations
 
             return person;
         }
-        void IPersonService.Delete(long id)
-        {
-            var result = _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
-            if (result != null)
-            {
-                try
-                {
-                    _context.Remove(result);
-                    _context.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
-            }
-
-        }
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
             return _context.Persons.Any(p => p.Id.Equals(id));
         }
