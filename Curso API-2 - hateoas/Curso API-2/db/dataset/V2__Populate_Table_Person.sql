@@ -1,0 +1,1 @@
+INSERT INTO `person` VALUES (1,'Rua 1','Vinícius ','Lopes','Male'),(2,'Anchiano - Italy','Leonardo ','da Vinci','Male'),(3,'Anchiano - Italy','Teste editar ','da Vinci','Male'),(5,'Anchiano - Italy','Teste criar ','da Vinci','Male'),(6,'Rua 1','Nelson ','Mandela','Male'),(8,'Rua 1','Nelson 1 ','Mandela','Male');
