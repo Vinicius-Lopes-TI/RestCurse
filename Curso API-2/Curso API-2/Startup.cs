@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Net.Http.Headers;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,16 @@ namespace Curso_API_2
             {
                 MigrateDatabase(connection);
             }
+
+            //Usar xml no postman: No headerscolocar key Accept e value: application/xml
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+
+            }).AddXmlSerializerFormatters();
 
             services.AddApiVersioning();
 
